@@ -22,7 +22,6 @@ import com.google.gson.Gson;
 import model.User;
 import processing.core.PApplet;
 
-
 public class Main extends PApplet {
 
 	// -------------------------------------
@@ -117,13 +116,18 @@ public class Main extends PApplet {
 	}
 
 	public void drawGradient(float x, float y) {
+		
 		int radius = dim / 2;
 		float h = random(0, 360);
+		
 		for (int r = radius; r > 0; --r) {
+			
 			fill(h, 90, 90);
 			ellipse(x, y, r, r);
 			h = (h + 1) % 360;
+			
 		}
+		
 	}
 
 	// -------------------------------------
@@ -138,11 +142,12 @@ public class Main extends PApplet {
 					try {
 
 						System.out.println("Esperando cliente");
+						
 						InetAddress i = InetAddress.getLocalHost();
-						System.out.println(i.getHostAddress());
 						ServerSocket serverSocket = new ServerSocket(5000);
 						socket = serverSocket.accept();
 						connected = true;
+						
 						System.out.println("Cliente conectado");
 
 						InputStream inputStream = socket.getInputStream();
@@ -174,7 +179,6 @@ public class Main extends PApplet {
 
 								String username = user.getUsername();
 								String password = user.getPassword();
-								System.out.println(username + " " + password);
 								String savedPassword = users.get(username);
 
 								if (savedPassword == null || !savedPassword.equals(password)) {
@@ -195,7 +199,6 @@ public class Main extends PApplet {
 						}
 
 					} catch(NullPointerException e) {
-						System.out.println("Hola");
 						msg="Client disconnected, reestart both applications";
 					}catch (IOException e) {
 						// TODO Auto-generated catch block
