@@ -2,6 +2,8 @@
 In this lab you will be able to transmit serialized data using TCP in ecosystems made up of Eclipse and Android nodes. This repository contains the ECLIPSE NODE (server).
 
 The exercise consists of making a system protected by user and password, so that the client must send credentials registered in the server to be able to enter.
+
+
 ![Frame 1](https://user-images.githubusercontent.com/47872252/94767112-64aa4400-0371-11eb-978c-1b2d89c91a86.jpg)
 
 ## Registered Users
