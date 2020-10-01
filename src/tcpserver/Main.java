@@ -166,7 +166,7 @@ public class Main extends PApplet {
 						
 							if(json==null) {
 								
-								msg = "                Waiting for client..";
+								msg = "Client disconnected, please restart the app";
 								
 							}else if (json.equals("logout")) {
 								
@@ -204,8 +204,10 @@ public class Main extends PApplet {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+						
 				}
-
+				
+			
 		).start();
 
 	}
