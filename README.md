@@ -3,8 +3,8 @@ In this lab you will be able to transmit serialized data using TCP in ecosystems
 
 The exercise consists of making a system protected by user and password, so that the client must send credentials registered in the server to be able to enter.
 
+![tcp](https://user-images.githubusercontent.com/47872252/94767349-ba7eec00-0371-11eb-9906-703e17b60851.jpg)
 
-![Frame 1](https://user-images.githubusercontent.com/47872252/94767112-64aa4400-0371-11eb-978c-1b2d89c91a86.jpg)
 
 ## Registered Users
 (username,password)
