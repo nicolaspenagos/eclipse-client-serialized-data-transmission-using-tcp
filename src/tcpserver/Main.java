@@ -1,5 +1,5 @@
 /**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- * @author Nicol·s Penagos Montoya
+ * @author Nicol√°s Penagos Montoya
  * nicolas.penagosm98@gmail.com
  **~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
@@ -31,6 +31,7 @@ public class Main extends PApplet {
 	private BufferedReader reader;
 	private BufferedWriter writer;
 	private boolean isAlive;
+	private boolean fA;
 
 	// -------------------------------------
 	// Attributes
@@ -58,11 +59,12 @@ public class Main extends PApplet {
 
 	public void setup() {
 
+		fA = false;
 		msg = "                Waiting for client..";
 		currentUser = "";
 		matched = false;
 		connected = false;
-		
+
 		users = new Hashtable<String, String>();
 		users.put("jester", "jr12345678");
 		users.put("catmoon", "c4tm00n");
@@ -71,8 +73,8 @@ public class Main extends PApplet {
 
 		isAlive = true;
 		initServer();
-		
-		//Background animation
+
+		// Background animation
 		dim = width / 2;
 		background(0);
 		colorMode(HSB, 360, 100, 100);
@@ -80,13 +82,11 @@ public class Main extends PApplet {
 		ellipseMode(RADIUS);
 		frameRate(5);
 
-	
-
 	}
 
 	public void draw() {
 
-		//Background animation
+		// Background animation
 		background(0);
 		colorMode(HSB, 360, 100, 100);
 
@@ -94,16 +94,22 @@ public class Main extends PApplet {
 			drawGradient(x, height / 2);
 		}
 
-		//Message from client
+		// Message from client
 		if (!currentUser.equals("")) {
-			msg = (matched) ? "                       Welcome! \n                          " + currentUser : "Failed attempt";
+			msg = (matched) ? "                       Welcome! \n                          " + currentUser
+					: "Failed attempt";
 		} else {
 			
-			if(connected)
+			
+			
+			if (connected)
 				msg = "Please enter your username and login";
 			else
 				msg = "              Waiting for client...";
 		}
+		
+		if(fA)
+			msg = "Failed attempt";
 
 		colorMode(RGB, 255);
 		fill(0);
@@ -116,18 +122,18 @@ public class Main extends PApplet {
 	}
 
 	public void drawGradient(float x, float y) {
-		
+
 		int radius = dim / 2;
 		float h = random(0, 360);
-		
+
 		for (int r = radius; r > 0; --r) {
-			
+
 			fill(h, 90, 90);
 			ellipse(x, y, r, r);
 			h = (h + 1) % 360;
-			
+
 		}
-		
+
 	}
 
 	// -------------------------------------
@@ -142,12 +148,11 @@ public class Main extends PApplet {
 					try {
 
 						System.out.println("Esperando cliente");
-						
-						InetAddress i = InetAddress.getLocalHost();
+
 						ServerSocket serverSocket = new ServerSocket(5000);
 						socket = serverSocket.accept();
 						connected = true;
-						
+
 						System.out.println("Cliente conectado");
 
 						InputStream inputStream = socket.getInputStream();
@@ -163,16 +168,16 @@ public class Main extends PApplet {
 						while (isAlive) {
 
 							String json = reader.readLine();
-						
-							if(json==null) {
-								
+
+							if (json == null) {
+
 								msg = "Client disconnected, please restart the app";
-								
-							}else if (json.equals("logout")) {
-								
+
+							} else if (json.equals("logout")) {
+
 								msg = "Please enter your username and login";
 								currentUser = "";
-								
+
 							} else {
 
 								User user = gson.fromJson(json, User.class);
@@ -186,6 +191,27 @@ public class Main extends PApplet {
 									matched = false;
 									sendMsg("false");
 
+									new Thread(
+											
+											()->{
+												
+												fA = true;
+												
+												try {
+													Thread.sleep(1500);
+												} catch (InterruptedException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												}
+												
+												fA = false;
+												
+											}
+											
+
+									).start();
+									
+
 								} else {
 
 									matched = true;
@@ -198,16 +224,15 @@ public class Main extends PApplet {
 
 						}
 
-					} catch(NullPointerException e) {
-						msg="Client disconnected, reestart both applications";
-					}catch (IOException e) {
+					} catch (NullPointerException e) {
+						msg = "Client disconnected, reestart both applications";
+					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-						
+
 				}
-				
-			
+
 		).start();
 
 	}
